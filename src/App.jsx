@@ -98,7 +98,7 @@ const App = () => {
   return (
     <div
       className={`min-h-screen w-screen overflow-x-hidden p-4 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-orange-50 text-black"
+        darkMode ? "bg-gray-900 text-black" : "bg-orange-50 text-black"
       }`}
     >
       <div className="flex w-full">
@@ -229,10 +229,12 @@ const App = () => {
         </div>
       </div>
 
-      <div className="mt-8 bg-white dark:bg-gray-800 p-4 md:p-6 rounded-xl">
+      <div className="mt-8 bg-white dark:bg-gray-800 p-4 md:p-6 rounded-xl" style={{
+            background: "linear-gradient(180deg, #F78E57 0%, #FCD8A9 100%)",
+          }}>
         <h2
           className="text-xl font-semibold mb-4 text-center px-2 py-2 "
-          style={{ background: "#F78E57" }}
+          style={{ background: "#FCD8A9" }}
         >
           {filterMode ? `${filterMode} Moods` : "All Notes"}
         </h2>
