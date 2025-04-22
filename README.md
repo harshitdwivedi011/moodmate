@@ -1,12 +1,15 @@
-# React + Vite
+# 🌤 MoodMate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**MoodMate** is a simple and beautiful mood tracking app that lets you record how you feel each day, add notes, and visualize your mood history on a calendar. It's your lightweight emotional journal with weather context and a smooth UI that supports both light and dark modes.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 Key Features
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- ✅ **Select Mood** – Choose from a range of emojis to represent your mood  
+- ✍️ **Daily Notes** – Add reflections or thoughts for the day  
+- 📅 **Calendar Integration** – See your moods over time  
+- 🌦 **Weather Info** – Automatically fetches temperature and weather condition for context  
+- 🌗 **Dark Mode Toggle** – Switch between light and dark themes  
+- 🎯 **Mood Filtering** – Focus on specific moods to reflect and analyze  
+- ⚡ **Session Storage** – Entries saved in session for quick access (non-persistent)
