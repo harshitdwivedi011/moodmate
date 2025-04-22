@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
+const apiKey = import.meta.env.VITE_API_KEY;
 const moodOptions = [
   { icon: "😊", color: "bg-yellow-300", value: "Happy" },
   { icon: "😐", color: "bg-yellow-600", value: "Neutral" },
@@ -24,7 +25,6 @@ const App = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [filterMode, setFilterMode] = useState(null);
   const [showFilterMenu, setShowFilterMenu] = useState(false);
-
   useEffect(() => {
     const stored = JSON.parse(sessionStorage.getItem("entries")) || [];
     setEntries(stored);
@@ -34,7 +34,7 @@ const App = () => {
     navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;
       const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=15e6ef34723c51fc065948cb7d0dcb0d&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`
       );
       const data = await res.json();
       setWeather({ temp: data.main.temp, condition: data.weather[0].main });
@@ -179,40 +179,43 @@ const App = () => {
               <div className="flex justify-between items-center mb-2">
                 <p className="text-lg font-semibold text-center">April</p>
                 <div className="relative">
-  <button
-    onClick={() => setShowFilterMenu((prev) => !prev)}
-    className="bg-gray-200 p-2 rounded"
-  >
-    <span className="text-lg">🔽</span>
-  </button>
+                  <button
+                    onClick={() => setShowFilterMenu((prev) => !prev)}
+                    className="bg-gray-200 p-2 rounded"
+                  >
+                    <span className="text-lg">🔽</span>
+                  </button>
 
-  {showFilterMenu && (
-    <div className="absolute right-0 mt-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded shadow-lg z-10">
-      <button
-        onClick={() => {
-          setFilterMode(null);
-          setShowFilterMenu(false);
-        }}
-        className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
-      >
-        Show All
-      </button>
-      {moodOptions.map((mood) => (
-        <button
-          key={mood.value}
-          onClick={() => {
-            setFilterMode(mood.value);
-            setShowFilterMenu(false);
-          }}
-          className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
-        >
-          <span>{mood.icon}</span>
-          <span>{mood.value.charAt(0).toUpperCase() + mood.value.slice(1)}</span>
-        </button>
-      ))}
-    </div>
-  )}
-</div>
+                  {showFilterMenu && (
+                    <div className="absolute right-0 mt-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded shadow-lg z-10">
+                      <button
+                        onClick={() => {
+                          setFilterMode(null);
+                          setShowFilterMenu(false);
+                        }}
+                        className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
+                      >
+                        Show All
+                      </button>
+                      {moodOptions.map((mood) => (
+                        <button
+                          key={mood.value}
+                          onClick={() => {
+                            setFilterMode(mood.value);
+                            setShowFilterMenu(false);
+                          }}
+                          className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
+                        >
+                          <span>{mood.icon}</span>
+                          <span>
+                            {mood.value.charAt(0).toUpperCase() +
+                              mood.value.slice(1)}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
               <Calendar
                 value={date}
@@ -227,18 +230,23 @@ const App = () => {
       </div>
 
       <div className="mt-8 bg-white dark:bg-gray-800 p-4 md:p-6 rounded-xl">
-        <h2 className="text-xl font-semibold mb-4 text-center px-2 py-2 " style={{ background: "#F78E57" }}>{filterMode ? `${filterMode} Moods` : "All Notes"}</h2>
+        <h2
+          className="text-xl font-semibold mb-4 text-center px-2 py-2 "
+          style={{ background: "#F78E57" }}
+        >
+          {filterMode ? `${filterMode} Moods` : "All Notes"}
+        </h2>
         {filterMode && (
-  <p className="text-sm mb-2 italic">
-    Filtering by mood: <strong>{filterMode}</strong>{" "}
-    <button
-      onClick={() => setFilterMode(null)}
-      className="ml-2 text-blue-500 hover:underline"
-    >
-      Clear
-    </button>
-  </p>
-)}
+          <p className="text-sm mb-2 italic">
+            Filtering by mood: <strong>{filterMode}</strong>{" "}
+            <button
+              onClick={() => setFilterMode(null)}
+              className="ml-2 text-blue-500 hover:underline"
+            >
+              Clear
+            </button>
+          </p>
+        )}
         <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-4">
           {filteredEntries.map((e) => (
             <div
@@ -250,8 +258,8 @@ const App = () => {
               </p>
               <p className="font-medium">{e.note}</p>
               <div className="flex justify-between">
-              <p className="text-sm">{e.date}</p>
-              <p className="text-sm italic">{e.weather?.temp}℃</p>
+                <p className="text-sm">{e.date}</p>
+                <p className="text-sm italic">{e.weather?.temp}℃</p>
               </div>
             </div>
           ))}
